@@ -108,9 +108,11 @@ weathindce['incidence'] <- (weathindce$cases/weathindce$u5total) * 1000
 
 # create the lag varaible for incidecne
 lag1 <- slide(weathindce, Var ='incidence', TimeVar = 'Epiweek', NewVar = 'lagince', slideBy = 4)
+lag2 <- slide(lag1, Var = 'AvgTemp', TimeVar = 'Epiweek', NewVar = 'templag4', slideBy = -4)
+lag3 <- slide(lag2, Var = 'AvgRain', TimeVar = 'Epiweek', NewVar = 'rainlag4', slideBy = -4)
 
 # Remove obseravations with missing district codes
-malaria <- subset(lag1,complete.cases(lag1$DISTCODE))
+malaria <- subset(lag3,complete.cases(lag3$DISTCODE))
 
 # Save the final dataset
 save(malaria,  file = 'C:\\Users\\micha\\Desktop\\Python & R in Data Science\\Project\\Data\\RDATA\\malaria.RData')
